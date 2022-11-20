@@ -41,31 +41,38 @@ function playRound(playerSelection, computerSelection) {
 
 }
 
-function game() {
-    let score = 0; 
-    for (let i =0; i<5; i++) {
-        let playerSelection = prompt('Put here');
-        let result = playRound(playerSelection, getComputerChoice());
-        console.log(result)
-        if (result.includes('Won')) {
-            score+=1;
-        }
-        if (result.includes('Lose')) {
-            score-=1;
-        }
+let playerScore = 0;
+let compScore = 0;
+let result = '';
+
+let rps = document.querySelectorAll('button')
+rps.forEach(choice => 
+    choice.addEventListener('click',() =>eventFunc(choice)))
+
+function eventFunc(choice) {
+    result = playRound(choice.getAttribute('id'), getComputerChoice());
+    if (result.includes('Won')) {
+        playerScore += 1;
     }
-    if (score < 0) {
-        console.log('And the winner is... COMPUTER!!!')
+    if (result.includes('Lose')) {
+        compScore +=1;
     }
-    else if (score > 0) {
-        console.log('And the winner is... HUMAN!!!')
-    }    
-    else {
-        console.log("It's a Draw)")
-    }
+    res = document.querySelector('#result');
+    res.textContent = result;
+    score = document.querySelector('#score');
+    score.textContent = `Score is ${playerScore} - ${compScore}`;
+
+    if (playerScore ==5) {
+        final = document.querySelector('#finalScore');
+        final.textContent = 'You won that game! Gratz!';
+    } 
+    else if (compScore ==5) {
+        final = document.querySelector('#finalScore');
+        final.textContent = 'You lost that game:( Sorry!';
+    } 
 }
 
-game()
+
 
 
 
